@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://syeqnhc6pbkg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0isx"]
+size = Vector2(55, 62)
+
+[node name="Player" type="CharacterBody2D" unique_id=2018148489]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=500553527]
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1487737649]
+position = Vector2(-258, 4)
+color = Color(0, 0.7599178, 0.24043617, 1)
+polygon = PackedVector2Array(81, -78, 123, -79, 122, -41, 81, -43)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=213323092]
+position = Vector2(-157.5, -59)
+shape = SubResource("RectangleShape2D_m0isx")
