@@ -7,3 +7,8 @@
 
 [node name="Player" parent="." unique_id=2018148489 instance=ExtResource("1_glv2v")]
 script = ExtResource("2_uu6xs")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=737948229]
+position = Vector2(-29, -224)
+polygon = PackedVector2Array(-265, -38, -307, 25, -228, 31)
+uv = PackedVector2Array(-265, -38, -307, 25, -228, 31)
