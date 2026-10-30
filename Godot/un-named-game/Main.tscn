@@ -1,14 +1,21 @@
 [gd_scene format=3 uid="uid://dxvchi1jrlhkg"]
 
+[ext_resource type="Script" uid="uid://dapmsmbldrat4" path="res://scripts/Pause Menu/Main.cs" id="1_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://syeqnhc6pbkg" path="res://MC.tscn" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://c1sn3hkq1rqej" path="res://scripts/main character/Mc.cs" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://cacna4eesgaqr" path="res://PauseMenu.tscn" id="3_r0du0"]
 
 [node name="Main" type="Node2D" unique_id=1491811315]
+process_mode = 3
+script = ExtResource("1_cm0pq")
 
 [node name="Player" parent="." unique_id=2018148489 instance=ExtResource("1_glv2v")]
+process_mode = 1
 script = ExtResource("2_uu6xs")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=737948229]
 position = Vector2(-29, -224)
 polygon = PackedVector2Array(-265, -38, -307, 25, -228, 31)
 uv = PackedVector2Array(-265, -38, -307, 25, -228, 31)
+
+[node name="PauseMenu" parent="." unique_id=597243422 instance=ExtResource("3_r0du0")]

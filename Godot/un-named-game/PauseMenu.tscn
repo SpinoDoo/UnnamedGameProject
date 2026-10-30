@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cacna4eesgaqr"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=597243422]
+
+[node name="Control" type="Control" parent="." unique_id=1069003126]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control" unique_id=1263651351]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1462974702]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 99.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/HBoxContainer" unique_id=1223320909]
+layout_mode = 2
+
+[node name="Mapp" type="Button" parent="Control/HBoxContainer" unique_id=420705781]
+layout_mode = 2
+text = "Mapp"
+
+[node name="Settings" type="Button" parent="Control/HBoxContainer" unique_id=966228680]
+layout_mode = 2
+text = "Character Informations"
+
+[node name="CharacterInfo" type="Button" parent="Control/HBoxContainer" unique_id=2109802844]
+layout_mode = 2
+text = "Settings"
