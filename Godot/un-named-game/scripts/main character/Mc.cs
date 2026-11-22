@@ -20,10 +20,10 @@ public partial class Mc : CharacterBody2D
 
 
 
-    //public override void _Ready()
-    //{
-    //var character = GetNode<CharacterBody2d>("Mc");
-    //}
+    public override void _Ready()
+    {
+        AddToGroup("player");
+    }
 
 
 
@@ -31,7 +31,7 @@ public partial class Mc : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
         float dt = (float)delta;
-
+        
 
 
         // Get the input direction and handle the movement/deceleration.
