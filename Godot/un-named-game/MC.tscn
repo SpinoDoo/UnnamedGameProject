@@ -4,6 +4,7 @@
 size = Vector2(55, 62)
 
 [node name="Player" type="CharacterBody2D" unique_id=2018148489]
+motion_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=500553527]
 
