@@ -9,19 +9,22 @@ public partial class Mc : CharacterBody2D
     const float Friction = 1200f;
     private float _rollCdTimer = 0.0f;
     private bool _isRolling = false;
+    private float RollSpeed = 50;
+    private float RollDuration = 3;
     private Vector2 _rollDirection;
-     // Duration of the rolling effect in seconds
-    public const float RollSpeed = 450.0f;
-    public const float RollDuration = 0.4f;
     public const float RollCooldown = 1.0f; // Cooldown time between rolls in seconds
     bool IsRollingAvailable = true;
     public Vector2 EndPosition;
+
+    [Export] public int MaxHp = 5;
+    private int _hp;
 
 
 
 
     public override void _Ready()
     {
+        _hp = MaxHp;
         AddToGroup("player");
     }
 
@@ -74,4 +77,16 @@ public partial class Mc : CharacterBody2D
         velocity = Velocity;
         MoveAndSlide();
 	}
+
+    public void TakeDamage(int amount)
+    {
+        _hp -= amount;
+        GD.Print($"Hp : {_hp}");
+
+        //Game Over
+        if (_hp <= 0)
+        {
+            GD.Print("A player meghalt");
+        }
+    }
 }

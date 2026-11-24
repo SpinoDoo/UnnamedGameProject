@@ -12,7 +12,6 @@ public partial class Enemys : CharacterBody2D
 	private int _hp;
 	private bool _dead;
 	private float _cooldown;
-	private float _attackTimer;
 	private bool _attacking;
 	private int _facing = 1;
 
@@ -32,13 +31,14 @@ public partial class Enemys : CharacterBody2D
 			_player = GetTree().GetFirstNodeInGroup("player") as Node2D;
 
 		Vector2 velocity = Vector2.Zero;
+		
 
-		if (_attacking)
-		{
-			// Ütés közben nem mozog és nem fordul
-			velocity = Vector2.Zero;
-		}
-		else if (_player != null)
+		//attack cd
+        float dt = (float)delta;
+        if (_cooldown > 0f)
+            _cooldown -= dt;
+
+        if (_player != null)
 		{
 			Vector2 vektor = _player.GlobalPosition - GlobalPosition;
 			float distSq = vektor.LengthSquared();
@@ -47,14 +47,41 @@ public partial class Enemys : CharacterBody2D
 			if (vektor.X != 0)
 				_facing = vektor.X > 0 ? 1 : -1;
 
-			// Csak akkor közelít, ha még nincs ütőtávon belül
+			// distance
 			if (distSq > rangeSq)
 			{
+				_attacking = false;
 				velocity = vektor.Normalized() * Speed;
+			}
+			else
+			{
+				velocity = Vector2.Zero;
+				if(_cooldown <= 0)
+				{
+					_cooldown = AttackCooldown;
+					DealDamage();
+				}
 			}
 		}
 
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	private void DealDamage()
+	{
+		if (_dead || _player == null || !IsInstanceValid(_player)) return;
+
+		Vector2 d = _player.GlobalPosition - GlobalPosition;
+
+		if(Mathf.Abs(d.LengthSquared()) <= AttackRange * AttackRange)
+		{
+            if (_player is Mc mc)
+            {
+                mc.TakeDamage(Damage);
+            }
+        }
+
+	}
+
 }
