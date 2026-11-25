@@ -23,4 +23,5 @@ uv = PackedVector2Array(-265, -38, -307, 25, -228, 31)
 [node name="PauseMenu" parent="." unique_id=597243422 instance=ExtResource("3_r0du0")]
 
 [node name="enemy" parent="." unique_id=1219517026 instance=ExtResource("5_fos0i")]
+process_mode = 1
 script = ExtResource("6_3dxm6")

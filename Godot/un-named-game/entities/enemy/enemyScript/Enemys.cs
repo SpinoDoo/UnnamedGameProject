@@ -31,14 +31,14 @@ public partial class Enemys : CharacterBody2D
 			_player = GetTree().GetFirstNodeInGroup("player") as Node2D;
 
 		Vector2 velocity = Vector2.Zero;
-		
+
 
 		//attack cd
-        float dt = (float)delta;
-        if (_cooldown > 0f)
-            _cooldown -= dt;
+		float dt = (float)delta;
+		if (_cooldown > 0f)
+			_cooldown -= dt;
 
-        if (_player != null)
+		if (_player != null)
 		{
 			Vector2 vektor = _player.GlobalPosition - GlobalPosition;
 			float distSq = vektor.LengthSquared();
@@ -56,7 +56,7 @@ public partial class Enemys : CharacterBody2D
 			else
 			{
 				velocity = Vector2.Zero;
-				if(_cooldown <= 0)
+				if (_cooldown <= 0)
 				{
 					_cooldown = AttackCooldown;
 					DealDamage();
@@ -74,14 +74,40 @@ public partial class Enemys : CharacterBody2D
 
 		Vector2 d = _player.GlobalPosition - GlobalPosition;
 
-		if(Mathf.Abs(d.LengthSquared()) <= AttackRange * AttackRange)
+		if (Mathf.Abs(d.LengthSquared()) <= AttackRange * AttackRange)
 		{
-            if (_player is Mc mc)
-            {
-                mc.TakeDamage(Damage);
-            }
-        }
+			if (_player is Mc mc)
+			{
+				mc.TakeDamage(Damage);
+			}
+		}
 
 	}
 
+	public void TakeDamage(int damage)
+	{
+        if (_dead) return;
+
+		_hp -= damage;
+
+		if (_hp <= 0)
+		{
+			Die();
+            return;
+        }
+    }
+
+
+	private void Die()
+	{
+		_dead = true;
+		RemoveFromGroup("enemy");
+
+        var shape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+		shape.SetDeferred("disabled", true);
+
+		QueueFree();
+
+
+    }
 }

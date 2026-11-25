@@ -20,11 +20,22 @@ public partial class Mc : CharacterBody2D
     private int _hp;
 
 
+    [Export] public int AttackDamage = 1;
+    [Export] public float AttackRange = 150f;
+    [Export] public float AttackCooldown = 2f;
+    [Export] public float AttackDuration = 1f;
+
+    private float _attackTimer = 0f;
+    private float _cooldown;
+    private float _attackDmg;
+    private bool _attacking = false;
+    
 
 
     public override void _Ready()
     {
         _hp = MaxHp;
+        _attackDmg = AttackDamage;
         AddToGroup("player");
     }
 
@@ -40,7 +51,32 @@ public partial class Mc : CharacterBody2D
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
         Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        if (_isRolling && IsRollingAvailable)
+        if (_cooldown >= 0f)
+            _cooldown -= dt;
+
+        if (_attackTimer >= 0f)
+        {
+            _attackTimer -= dt;
+            if (_attackTimer <= 0f)
+                _attacking = false;
+        }
+
+        if (Input.IsActionJustPressed("Attack")
+            && _cooldown <= 0
+            && _isRolling == false)
+        {
+            _attacking = true;
+            _attackTimer = AttackDuration;
+            _cooldown = AttackCooldown;
+            StartAttack();
+        }
+
+
+        if (_attacking)
+        {
+            Velocity = Vector2.Zero;
+        }
+        else if (_isRolling && IsRollingAvailable)
         {
             GlobalPosition = EndPosition;
             _isRolling = false;
@@ -74,6 +110,9 @@ public partial class Mc : CharacterBody2D
             IsRollingAvailable = true;
         }
 
+
+
+
         velocity = Velocity;
         MoveAndSlide();
 	}
@@ -89,4 +128,24 @@ public partial class Mc : CharacterBody2D
             GD.Print("A player meghalt");
         }
     }
+
+
+    private void StartAttack()
+    {
+        foreach (Node node in GetTree().GetNodesInGroup("enemy"))
+        {
+            if (node is not Node2D enemy || !IsInstanceValid(enemy)) continue;
+
+            Vector2 d = enemy.GlobalPosition - GlobalPosition;
+
+            float distSq = d.LengthSquared();
+            float rangeSq = AttackRange * AttackRange;
+            if (distSq < rangeSq && enemy.HasMethod("TakeDamage")) 
+            {
+                enemy.Call("TakeDamage", AttackDamage);
+            }
+        }
+    }
+
+
 }
