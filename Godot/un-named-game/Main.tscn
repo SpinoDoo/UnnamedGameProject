@@ -11,17 +11,19 @@
 process_mode = 3
 script = ExtResource("1_cm0pq")
 
-[node name="Player" parent="." unique_id=2018148489 instance=ExtResource("1_glv2v")]
+[node name="PauseVariable" type="Node2D" parent="." unique_id=728420747]
+
+[node name="enemy" parent="PauseVariable" unique_id=1219517026 instance=ExtResource("5_fos0i")]
+process_mode = 1
+script = ExtResource("6_3dxm6")
+
+[node name="Player" parent="PauseVariable" unique_id=2018148489 instance=ExtResource("1_glv2v")]
 process_mode = 1
 script = ExtResource("2_uu6xs")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=737948229]
+[node name="Polygon2D" type="Polygon2D" parent="PauseVariable" unique_id=737948229]
 position = Vector2(-29, -224)
 polygon = PackedVector2Array(-265, -38, -307, 25, -228, 31)
 uv = PackedVector2Array(-265, -38, -307, 25, -228, 31)
 
 [node name="PauseMenu" parent="." unique_id=597243422 instance=ExtResource("3_r0du0")]
-
-[node name="enemy" parent="." unique_id=1219517026 instance=ExtResource("5_fos0i")]
-process_mode = 1
-script = ExtResource("6_3dxm6")
