@@ -3,6 +3,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0isx"]
 size = Vector2(55, 62)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_k26u1"]
+radius = 68.117546
+
 [node name="Player" type="CharacterBody2D" unique_id=2018148489]
 motion_mode = 1
 
@@ -16,3 +19,8 @@ polygon = PackedVector2Array(81, -78, 123, -79, 122, -41, 81, -43)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=213323092]
 position = Vector2(2, -6)
 shape = SubResource("RectangleShape2D_m0isx")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=357180878]
+
+[node name="CircleShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1432281903]
+shape = SubResource("CircleShape2D_k26u1")
