@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://d4n3b2va6fwk4"]
 
+[ext_resource type="PackedScene" uid="uid://d06h4in1c3kdf" path="res://Ui Elements/Pause Menu/pausable.tscn" id="1_dhgix"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0pq"]
 size = Vector2(124, 111)
 
@@ -15,3 +17,5 @@ polygon = PackedVector2Array(-55, 167, -37, 126, 18, 120, 42, 156, 8, 205)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=931883548]
 position = Vector2(-4, -2.5)
 shape = SubResource("RectangleShape2D_cm0pq")
+
+[node name="Pausable" parent="." unique_id=73835871 instance=ExtResource("1_dhgix")]

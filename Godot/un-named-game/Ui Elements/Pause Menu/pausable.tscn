@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d06h4in1c3kdf"]
+
+[ext_resource type="Script" uid="uid://e3wrrk0sl7nv" path="res://Ui Elements/Pause Menu/Pausable.cs" id="1_77ulx"]
+
+[node name="Pausable" type="Node" unique_id=73835871]
+script = ExtResource("1_77ulx")

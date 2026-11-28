@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://syeqnhc6pbkg"]
 
+[ext_resource type="PackedScene" uid="uid://d06h4in1c3kdf" path="res://Ui Elements/Pause Menu/pausable.tscn" id="1_iu675"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0isx"]
 size = Vector2(55, 62)
 
@@ -24,3 +26,5 @@ shape = SubResource("RectangleShape2D_m0isx")
 
 [node name="CircleShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1432281903]
 shape = SubResource("CircleShape2D_k26u1")
+
+[node name="Pausable" parent="." unique_id=73835871 instance=ExtResource("1_iu675")]
