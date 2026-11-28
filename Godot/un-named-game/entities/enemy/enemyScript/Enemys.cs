@@ -1,99 +1,90 @@
 using Godot;
 using System;
-
 public partial class Enemys : CharacterBody2D
 {
+    public static readonly StringName EnemyGroup = "enemy";
+
+    // States
+    public enum State
+    {
+        Idle,
+        Chase,
+        InRange,
+        Dead,
+    }
+
+    // Stats
+    [ExportGroup("Health")]
     [Export] public int MaxHp = 1;
-    [Export] public float Speed = 80f;
+
+    [ExportGroup("Movement")]
+    [Export] public float MoveSpeed = 80f;
+
+    [ExportGroup("Attack")]
     [Export] public float AttackRange = 125f;
     [Export] public float AttackCooldown = 1.2f;
     [Export] public int Damage = 1;
 
     private int _hp;
-    private bool _dead;
-    private float _cooldown;
-    private int _facing = 1;
 
-    private Node2D _player;
+    public State CurrentState { get; private set; } = State.Idle;
+    public int Hp => _hp;
+    public int Facing { get; private set; } = 1;
 
+    // Lifecycle
     public override void _Ready()
     {
         _hp = MaxHp;
-        AddToGroup("enemy");
+        AddToGroup(EnemyGroup);
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_dead) return;
+        if (CurrentState == State.Dead)
+            return;
 
-        float dt = (float)delta;
-        if (_cooldown > 0f)
-            _cooldown -= dt;
-
-        if (_player == null || !IsInstanceValid(_player) || !_player.IsInGroup("player"))
-            _player = GetTree().GetFirstNodeInGroup("player") as Node2D;
-
-        Vector2 velocity = Vector2.Zero;
-
-        if (_player != null)
+        // Target
+        Mc player = Mc.Instance;
+        if (player == null)
         {
-            Vector2 vektor = _player.GlobalPosition - GlobalPosition;
-            float distSq = vektor.LengthSquared();
-            float rangeSq = AttackRange * AttackRange;
-
-            if (vektor.X != 0)
-                _facing = vektor.X > 0 ? 1 : -1;
-
-            if (distSq > rangeSq)
-            {
-                velocity = vektor.Normalized() * Speed;
-            }
-            else
-            {
-                velocity = Vector2.Zero;
-                if (_cooldown <= 0f)
-                {
-                    _cooldown = AttackCooldown;
-                    DealDamage();
-                }
-            }
+            CurrentState = State.Idle;
+            return;
         }
 
-        Velocity = velocity;
-        MoveAndSlide();
-    }
+        Vector2 toPlayer = player.GlobalPosition - GlobalPosition;
 
-    private void DealDamage()
-    {
-        if (_dead || _player == null || !IsInstanceValid(_player)) return;
+        // Facing
+        if (toPlayer.X != 0f)
+            Facing = toPlayer.X > 0f ? 1 : -1;
 
-        Vector2 d = _player.GlobalPosition - GlobalPosition;
-        if (d.LengthSquared() <= AttackRange * AttackRange && _player is Mc mc)
+        // Movement
+        if (toPlayer.LengthSquared() > AttackRange * AttackRange)
         {
-            mc.TakeDamage(Damage);
+            CurrentState = State.Chase;
+            Velocity = toPlayer.Normalized() * MoveSpeed;
+            MoveAndSlide();
+        }
+        else
+        {
+            CurrentState = State.InRange;
+            Velocity = Vector2.Zero;
         }
     }
 
-    public void TakeDamage(int damage)
+    // Damage
+    public void TakeDamage(int amount)
     {
-        if (_dead) return;
+        if (CurrentState == State.Dead)
+            return;
 
-        _hp -= damage;
-
+        _hp -= amount;
         if (_hp <= 0)
-        {
             Die();
-        }
     }
 
     private void Die()
     {
-        _dead = true;
-        RemoveFromGroup("enemy");
-
-        var shape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
-        shape?.SetDeferred("disabled", true);
-
+        CurrentState = State.Dead;
         QueueFree();
     }
 }
