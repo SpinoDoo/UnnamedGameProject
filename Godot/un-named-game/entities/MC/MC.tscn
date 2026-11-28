@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://syeqnhc6pbkg"]
 
+[ext_resource type="Script" uid="uid://c1sn3hkq1rqej" path="res://entities/MC/main character script/Mc.cs" id="1_62flk"]
 [ext_resource type="PackedScene" uid="uid://d06h4in1c3kdf" path="res://Ui Elements/Pause Menu/pausable.tscn" id="1_iu675"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0isx"]
@@ -7,6 +8,7 @@ size = Vector2(55, 62)
 
 [node name="Player" type="CharacterBody2D" unique_id=2018148489]
 motion_mode = 1
+script = ExtResource("1_62flk")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=500553527]
 

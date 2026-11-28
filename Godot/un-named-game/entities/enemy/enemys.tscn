@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d4n3b2va6fwk4"]
 
 [ext_resource type="PackedScene" uid="uid://d06h4in1c3kdf" path="res://Ui Elements/Pause Menu/pausable.tscn" id="1_dhgix"]
+[ext_resource type="Script" uid="uid://dej7a4t14ryhm" path="res://entities/enemy/enemyScript/Enemys.cs" id="1_oy5hx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0pq"]
 size = Vector2(124, 111)
@@ -8,6 +9,7 @@ size = Vector2(124, 111)
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1219517026]
 position = Vector2(561, 255)
 motion_mode = 1
+script = ExtResource("1_oy5hx")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=37220206]
 position = Vector2(5, -161)
